@@ -1,0 +1,235 @@
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+ 
+  <title> Cube Plugin, Version 1.0 </title> 
+ 
+
+<style type="text/css">
+<!--
+@import url("/include2005/home.css");
+@import url("/include2005/level2b.css");
+@import url("/include2005/tcb.css");
+-->
+</style>
+</head>
+<body>
+
+<div id="container">
+  <div id="header">
+    <div id="logo"><a class='clear' href="/"><img width=615 height=100 
+                      src="/include2005/images/spacer.gif" border=0 /></a></div>
+  </div>
+  <div id="main">
+     <div id="sidenav">
+
+  
+     <div>
+
+
+ <ul>
+   <li> <h2><a href="/">Home</a></h2></li>
+   <li> <h2><a href="/Overview/">Overview</a></h2></li>
+   <li> <h2><a href="/Publications/">Publications</a></h2></li>
+   <li> <h2><a href="/Research/Categories/">Research</a></h2></li>
+
+   <li id="active"> <h2><a href="/Development/">Software</a></h2></li>
+   <li> <h3><a href="/Research/vmd/">VMD Molecular Graphics Viewer</a></h3></li>
+   <li> <h3><a href="/Research/namd/">NAMD Molecular Dynamics Simulator</a></h3></li>
+   <li> <h3><a href="/Research/biocore/">BioCoRE Collaboratory Environment</a></h3></li>
+   <li> <h3><a href="/Development/MDTools/">MD Service Suite</a></h3></li>
+   <li> <h3><a href="/Development/biosoftdb/">Structural Biology Software Database</a></h3> </li>
+   <li> <h3><a href="/Development/Computers/">Computational Facility</a></h3></li>
+
+   <li> <h2><a href="/Outreach/">Outreach</a></h2></li>
+ </ul>
+
+
+
+<p> &nbsp; </p> 
+<p> &nbsp; </p> 
+<p> <a href="http://biocore.ks.uiuc.edu/biocore/biofs/VMD%20(Public)/index.html">VMD <br /> Community <br /> Pages </p>
+<p> &nbsp; </p> 
+<p> <a href="/Development/Download/download.cgi?PackageName=VMD">Download <br /> VMD </a> </p>
+<p> &nbsp; </p> 
+<p> <a href="/Research/vmd/current/docs.html#tutorials">VMD <br /> Tutorials</a> </p>
+<p> &nbsp; </p> 
+<p> <a href="/Research/vmd/current/docs.html">VMD <br /> Manuals </a> </p>
+<p> &nbsp; </p> 
+<p> <a href="/Research/vmd/mailing_list">VMD <br /> Mailing <br />List</a> </p>
+<p> &nbsp; </p> 
+</div>
+
+
+
+  
+
+  <div id="sidetext">
+   
+   
+  </div>
+
+  <div id="sidenav">
+   
+     
+  <!-- Search Google -->
+   <ul>
+    <li> <h2><a href="/search.html">Search</a></h2> </li>
+    <li style='text-align: right'> 
+     <FORM method=GET action="http://www.google.com/search">
+      
+        <input type=hidden name=sitesearch 
+	 value="www.ks.uiuc.edu/Research/vmd/" />
+        <INPUT TYPE=text name=q size=14 maxlength=255 
+         value="Search .ks.uiuc.edu" onfocus="this.value=''" /><br />
+      
+      <INPUT type=submit name=btnG VALUE="Google" />
+     </FORM>
+    </li>
+   </ul>
+  <!-- End Google Search -->
+
+   
+  </div>
+
+ </div>
+
+    <div id="text">
+      <h2 class='navinfo'>Cube Plugin, Version 1.0</h2>
+      <!-- End Headers -->
+
+
+
+<!-- CONTENT BEGINS HERE -->
+
+
+<p>This plugin reads the atom positions and volumetric data sets in the 
+plain text "cube" format as created by the 
+<a href="http://www.gaussian.com/">Gaussian program package</a>. 
+The plugin supports cube files with single grid (e.g. densities,
+laplacian, electrostatic potential) and orbital cube files with
+multiple orbitals.<br>
+There are other programs that can create "cube" files natively
+or convert native data to the "cube" files. This plugin can only
+read those files, that comply with the following description:
+<pre>
+C     WRITE A FORMATTED CUBEFILE VERY SIMILAR TO THOSE CREATED BY 
+C     THE GAUSSIAN PROGRAM OR THE CUBEGEN UTILITY.
+C     THE FORMAT IS AS FOLLOWS (LAST CHECKED AGAINST GAUSSIAN 98):
+C
+C     LINE   FORMAT      CONTENTS
+C     ===============================================================
+C      1     A           TITLE
+C      2     A           DESCRIPTION OF PROPERTY STORED IN CUBEFILE
+C      3     I5,3F12.6   #ATOMS, X-,Y-,Z-COORDINATES OF ORIGIN
+C      4-6   I5,3F12.6   #GRIDPOINTS, INCREMENT VECTOR
+C      #ATOMS LINES OF ATOM COORDINATES:
+C      ...   I5,4F12.6   ATOM NUMBER, CHARGE, X-,Y-,Z-COORDINATE
+C      REST: 6E13.5      CUBE DATA (WITH Z INCREMENT MOVING FASTEST, THEN
+C                        Y AND THEN X)
+C
+C     FOR ORBITAL CUBE FILES, #ATOMS WILL BE < 0 AND THERE WILL BE ONE
+C     ADDITIONAL LINE AFTER THE FINAL ATOM GIVING THE NUMBER OF ORBITALS
+C     AND THEIR RESPECTIVE NUMBERS. ALSO THE ORBITAL NUMBER WILL BE
+C     THE FASTEST MOVING INCREMENT.
+C
+C     ALL COORDINATES ARE GIVEN IN ATOMIC UNITS.
+</pre>
+
+<h3>Notes:</h3>
+
+<p><b>Coordinate Rotation / Periodic Display</b>
+<br>VMD currently can only display periodic images of the 
+unit cell correctly, if the first cell vector is collinear
+with the x-axis and the second cell vector in the xy-plane.
+Upon loading of the cube file, the coordinates and the 
+grid vectors are rotated accordingly. Unfortunately, that
+may make the atomic positions incompatible to some other
+coordinate files containing matching coordinates.
+
+<p><b>Read-only</b>
+<br>This plugin is only used to read files. 
+VMD does not currently support writing this file type.</p>
+
+<p><b>Memory Usage / Large Cube Files</b>
+<br>Due to the way cube files with multiple grids (e.g. orbitals)
+are written, the plugin will temporarily hold all gridded data
+in memory to get a <b>huge</b> performance increase. So 
+loading a single orbital data set from a large cube file with
+many orbitals may need a machine with a lot of available 
+memory and/or swap space. Also the plugin uses some features
+internally, which may not work for files larger than 2GB
+on 32-bit systems.
+
+<p><b>Atom Masses</b>
+<br>The plugin assigns masses to the atoms according to the 
+natural isotope distribution of the elements (see e.g.
+<a href="http://www.webelements.com/">http://www.webelements.com/</a>).
+If an element could not been recognized, a mass of 0 is assigned.
+To set the mass for those elements or assign a different mass for
+the other atoms, you have to use to create a selection with
+<b>atomselect</b> and then use the selection subcommands to set
+the mass.
+
+<p><b>Binary Cube Files</b>
+<br>Unformatted binary cube files, as they were created by
+versions before Gaussian 98 are not supported by this plugin.
+
+<p><b>Atomic Positions in Angstrom</b>
+<br>The atomic positions and the grid vectors in a cube file 
+are <b>always</b> in atomic units. There is a comment in 
+the Gaussian documentation, that describes, how you can 
+provide a custom grid in angstrom in the <b>input</b> of 
+a gaussian job.
+
+<p><b>Incompatibilities</b>
+<br>If VMD cannot read your cube file, please check the above
+notices. If your cube file has a negative number of atoms, 
+but is missing the orbitals line, you may still be able
+to read it, by changing the sign of the number of atoms.
+But most likely the positions and the grid will be given 
+in angstrom then (see the comment above), so all distances
+will be too short by a factor of about 1.9.
+
+    </div>
+    <div class="cleardiv">footer</div>
+  
+
+    <div id="footer">
+      <a href="http://www.beckman.uiuc.edu/">Beckman Institute for Advanced 
+	Science and Technology</a> 
+      // <a href="http://www.nih.gov/">National Institutes of Health</a>
+      // <a href="http://www.nsf.gov/">National Science Foundation</a>
+      // <a href="http://www.physics.uiuc.edu/">Physics</a>, 
+         <a href="http://www.cs.uiuc.edu/">Computer Science</a>, and
+         <a href="http://www.life.uiuc.edu/biophysics/">Biophysics</a>
+	  at <a href="http://www.uiuc.edu/">UIUC</a> <br />
+      <a href="/Overview/reach.html">Contact Us</a> //
+      Material on this page is <a href="/copyright.html">copyrighted</a>;
+       contact <a href="mailto:webserver@ks.uiuc.edu">Webmaster</a> for more 
+       information. //
+      Document last modified on 27 Feb 2007 //
+      1316 accesses since 20 Mar 2006
+ .
+    </div>
+  </div>
+</div>
+
+</body></html>
+
+
+
